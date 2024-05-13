@@ -1,0 +1,4 @@
+name: Aurora
+version: '${project.version}'
+main: me.oscarcusick.aurora.Aurora
+api-version: '1.20'
