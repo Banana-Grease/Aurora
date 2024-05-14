@@ -2,6 +2,7 @@ package me.oscarcusick.aurora.Utility;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
@@ -74,5 +75,25 @@ public class GeneralUtility {
     }
     public void TellPlayer(Player TargetPlayer, String Content) { // overload to provide AdditionalModule as an optional parameter
         TellPlayer(TargetPlayer, Content, "");
+    }
+
+    // checks to see if the str contains a player's name or their display name. if a player is found return them
+    // returns null if none found
+    public Player StringContainsPlayerName(String Str) {
+        Player FoundPlayer = null;
+        for (Player P : PluginInstance.getServer().getOnlinePlayers()) {
+            if ((Str.toLowerCase().contains(P.getName().toLowerCase())) || (Str.toLowerCase().contains(P.getDisplayName().toLowerCase()))) {
+                FoundPlayer = P.getPlayer();
+            }
+        }
+        return FoundPlayer;
+    }
+
+    public void AttemptCrash(Player Defender, Player Target) {
+        GeneralUtility GU = new GeneralUtility(PluginInstance);
+        Target.spawnParticle(Particle.BUBBLE_COLUMN_UP, Target.getLocation(), 900000000); // send enough data to client to crash it
+        if (Defender != null) { // if defender report to
+            GU.TellPlayer(Defender, "Attempted to crash " + GU.Gold + ChatColor.BOLD + Target.getName());
+        }
     }
 }

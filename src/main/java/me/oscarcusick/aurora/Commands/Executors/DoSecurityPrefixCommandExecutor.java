@@ -29,7 +29,7 @@ public class DoSecurityPrefixCommandExecutor implements Listener {
 
             // for loop checking if it matches any flags for true
             for (int i = 0; i < GU.ArgumentTrueFlags.length; i++) {
-                if (event.strings[0].toString().equals(GU.ArgumentTrueFlags[i])) { // if strings[0] matches current argument flag
+                if (event.strings[0].toString().equalsIgnoreCase(GU.ArgumentTrueFlags[i])) { // if strings[0] matches current argument flag
                     DoPrefixTrue = true; // override to true
                     break;
                 }
