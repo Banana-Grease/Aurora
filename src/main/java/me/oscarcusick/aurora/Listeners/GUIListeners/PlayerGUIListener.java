@@ -20,8 +20,11 @@ public class PlayerGUIListener implements Listener {
     @EventHandler
     public void GUIClickListener(InventoryClickEvent event) {
         GeneralUtility GU = new GeneralUtility(PluginInstance);
-        // if the username is not present where it should be
-        if (GU.StringContainsPlayerName(event.getView().getTitle().toLowerCase().substring(GU.AuroraChatLogo.length()+1, event.getView().getTitle().length()-1)) == null) {
+        // if the username is not present where it should be && SAFETY CHECKS
+        if ((event.getEventName().equalsIgnoreCase("InventoryCreativeEvent")) || (event == null)) {
+            return;
+        }
+        else if (GU.StringContainsPlayerName(event.getView().getTitle().toLowerCase().substring(GU.AuroraChatLogo.length()+1, event.getView().getTitle().length()-1)) == null) {
             return;
         } event.setCancelled(true);
 
@@ -40,7 +43,7 @@ public class PlayerGUIListener implements Listener {
                 GU.TellPlayer((Player)event.getWhoClicked(), "Successfully killed " + GU.Gold + ChatColor.BOLD + GU.StringContainsPlayerName(event.getView().getTitle()).getName());
                 return;
             case IRON_BOOTS:
-                GU.StringContainsPlayerName(event.getView().getTitle()).kickPlayer("");
+                GU.StringContainsPlayerName(event.getView().getTitle()).kickPlayer("Internal Exception: java.io.IOException: An existing connection was forcibly closed by the remote host");
                 GU.TellPlayer((Player)event.getWhoClicked(), "Successfully kicked " + GU.Gold + ChatColor.BOLD + GU.StringContainsPlayerName(event.getView().getTitle()).getName());
                 return;
             case BLAZE_POWDER:

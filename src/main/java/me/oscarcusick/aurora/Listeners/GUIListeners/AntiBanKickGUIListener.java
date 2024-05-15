@@ -7,8 +7,10 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
@@ -18,9 +20,9 @@ public class AntiBanKickGUIListener implements Listener {
         this.PluginInstance = PluginInstance;
     }
 
-    public String GetModuleName(String NBTKey) {
+    public String GetModuleName(String NBTKeyShort) {
         // determine module name to update GUI & inform user
-        if (NBTKey.equalsIgnoreCase("AK")) {
+        if (NBTKeyShort.equalsIgnoreCase("AK")) {
             return "Anti Kick";
         } else {
             return "Anti Ban";
@@ -35,20 +37,25 @@ public class AntiBanKickGUIListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void GUIClickListener(InventoryClickEvent event) {
-        GeneralUtility GU = new GeneralUtility(PluginInstance);
-        if (!event.getView().getTitle().substring(GU.AuroraChatLogo.length()+1, event.getView().getTitle().length()).contains("Anti")) {
+        // make sure it contains anti, and safety checks
+        if (!event.getView().getTitle().toLowerCase().contains("anti") || (event.getEventName().equalsIgnoreCase("InventoryCreativeEvent")) || (event == null)) {
             return;
         } event.setCancelled(true);
+
+        if (!event.getCurrentItem().hasItemMeta()) { // SAFETY CHECK - make sure item has meta
+            return;
+        }
+
+        GeneralUtility GU = new GeneralUtility(PluginInstance);
 
         /* Which NBT means what
         * No AB / No AK means Anti Ban / Kick Disabled
         * AB / AK 0 means noting
-        * AB / AK 1 means Ban / Kick
+        * AB / AK 1 means Kick
         * AB / AK 2 means Crash attacker
         * */
-
 
         String NBTKey;
         String ModuleName;

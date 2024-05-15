@@ -31,7 +31,7 @@ public class AntiBanKickGUI {
                     case 2:
                         return "Crash";
                     default:
-                        return "";
+                        return (ChatColor.RED + "" + ChatColor.BOLD + "NULL");
                 }
             }
         } else {

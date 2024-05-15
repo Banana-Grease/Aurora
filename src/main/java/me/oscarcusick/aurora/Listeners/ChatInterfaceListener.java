@@ -19,7 +19,7 @@ public class ChatInterfaceListener implements Listener {
         this.PluginInstance = PluginInstance;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST) // last in queue, final say
     public void ChatInterface(PlayerChatEvent event) throws NoSuchAlgorithmException { // any form of UI using chat will be handled through this
         GeneralUtility GU = new GeneralUtility(PluginInstance);
         Player ChatPlayer;
