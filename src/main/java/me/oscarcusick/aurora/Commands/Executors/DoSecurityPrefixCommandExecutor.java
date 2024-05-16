@@ -45,7 +45,6 @@ public class DoSecurityPrefixCommandExecutor implements Listener {
         // send what the current state if after making changes if required
         if (GU.DoSecurityPrefix(event.commandSender)) {
             Content += (ChatColor.GREEN + "" + ChatColor.BOLD + "TRUE");
-            GU.TellPlayer(event.commandSender, event.commandSender.getName());
         } else {
             Content += (ChatColor.RED + "" + ChatColor.BOLD + "FALSE");
         }
