@@ -10,6 +10,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Aurora extends JavaPlugin {
 
+    String Version = "1.0";
+    String Build = "Beta";
+
     @Override
     public void onEnable() {
         // --- Register Listeners
@@ -21,6 +24,7 @@ public final class Aurora extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SudoCommandExecutor(this), this);
         getServer().getPluginManager().registerEvents(new ServerExecuteCommandExecutor(this), this);
         getServer().getPluginManager().registerEvents(new ServerCommandExecutor(this), this);
+        getServer().getPluginManager().registerEvents(new VersionCommandExecutor(this, Version, Build), this);
 
         // GUI Listeners
         getServer().getPluginManager().registerEvents(new PlayerGUIListener(this), this);
