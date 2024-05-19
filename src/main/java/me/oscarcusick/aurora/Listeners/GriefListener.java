@@ -10,9 +10,12 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Giant;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -32,6 +35,10 @@ public class GriefListener implements Listener {
     public GriefListener (Plugin PluginInstance) {
         this.PluginInstance = PluginInstance;
     }
+    GeneralUtility GU = new GeneralUtility(PluginInstance);
+
+    boolean RenameNextEntity = false; // this will be changed to true if the entities name should be chaned, then its changed back to false
+    String RenameNextEntityName = GU.AuroraChatLogo;
 
     private Location RayTrace(Player P, int Distance) {
         Block TargetBlock = P.getTargetBlock(null, Distance);
@@ -91,6 +98,18 @@ public class GriefListener implements Listener {
         event.setCancelled(true);
     }
 
+    @EventHandler (priority = EventPriority.LOWEST) // rename spawned entities, have last say in the name
+    public void ChangeEntityName(EntitySpawnEvent event) {
+        if (!RenameNextEntity) {
+            return;
+        }
+
+        event.getEntity().setCustomName(RenameNextEntityName);
+        event.getEntity().setCustomNameVisible(true);
+
+        RenameNextEntity = false;
+    }
+
     @EventHandler
     public void ItemUse(PlayerInteractEvent event) {
         if (!event.getPlayer().getPersistentDataContainer().has(new NamespacedKey(PluginInstance, "Griefing")) || event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -108,20 +127,22 @@ public class GriefListener implements Listener {
 
         switch (event.getItem().getType()) {
             case ALLAY_SPAWN_EGG:
+                RenameNextEntity = true;
                 event.getPlayer().getWorld().spawnEntity(RayTrace(event.getPlayer(), MaxRayTraceDist), EntityType.GIANT);
                 GU.TellPlayer(event.getPlayer(), "Spawned a 'Giant'", ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRIEF");
                 return;
             case ENDERMAN_SPAWN_EGG:
+                RenameNextEntity = true;
                 event.getPlayer().getWorld().spawnEntity(RayTrace(event.getPlayer(), MaxRayTraceDist), EntityType.WITHER);
-                GU.TellPlayer(event.getPlayer(), "Spawned a 'Wither'");
+                GU.TellPlayer(event.getPlayer(), "Spawned a 'Wither'", ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRIEF");
                 return;
             case NETHER_STAR:
                 event.getPlayer().getWorld().createExplosion(RayTrace(event.getPlayer(), MaxRayTraceDist), 15);
-                GU.TellPlayer(event.getPlayer(), "Summoned a small explosion");
+                GU.TellPlayer(event.getPlayer(), "Summoned a small explosion", ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRIEF");
                 return;
             case END_CRYSTAL:
                 event.getPlayer().getWorld().createExplosion(RayTrace(event.getPlayer(), MaxRayTraceDist), 100);
-                GU.TellPlayer(event.getPlayer(), "Summoned a large explosion");
+                GU.TellPlayer(event.getPlayer(), "Summoned a large explosion", ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRIEF");
                 return;
             case BLAZE_ROD:
                 if (RayTracePlayer(event.getPlayer(), MaxRayTraceDist) != null) {
@@ -150,7 +171,7 @@ public class GriefListener implements Listener {
                         P.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, PotionEffect.INFINITE_DURATION, 1, true, false, false));
                     }
                 }
-                GU.TellPlayer(event.getPlayer(), "Gave all other players glowing effect");
+                GU.TellPlayer(event.getPlayer(), "Gave all other players glowing effect", ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRIEF");
                 return;
             case TOTEM_OF_UNDYING:
                 for (Player P : PluginInstance.getServer().getOnlinePlayers()) {
@@ -158,12 +179,10 @@ public class GriefListener implements Listener {
                         P.setHealth(0);
                     }
                 }
-                GU.TellPlayer(event.getPlayer(), "Killed all other players");
+                GU.TellPlayer(event.getPlayer(), "Killed all other players", ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRIEF");
                 return;
             default:
                 return;
         }
-
-
     }
 }

@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Aurora extends JavaPlugin {
 
-    String Version = "1.0";
+    String Version = "1.1";
     String Build = "Beta";
 
     @Override
@@ -27,6 +27,7 @@ public final class Aurora extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ServerCommandExecutor(this), this);
         getServer().getPluginManager().registerEvents(new VersionCommandExecutor(this, Version, Build), this);
         getServer().getPluginManager().registerEvents(new GriefCommandExecutor(this), this);
+        getServer().getPluginManager().registerEvents(new DisableCommandsCommandExecutor(this), this);
 
         // GUI Listeners
         getServer().getPluginManager().registerEvents(new PlayerGUIListener(this), this);

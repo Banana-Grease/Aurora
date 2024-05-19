@@ -14,7 +14,6 @@ public class DoSecurityPrefixCommandExecutor implements Listener {
         this.PluginInstance = PluginInstance;
     }
 
-
     @EventHandler
     public void DoSecurityPrefixCommand(HiddenCommandEvent event) {
         if (!event.command.equalsIgnoreCase("DoSecurityPrefix")) {
@@ -27,13 +26,7 @@ public class DoSecurityPrefixCommandExecutor implements Listener {
         if (event.strings.length > 0) {
             boolean DoPrefixTrue = false; // set to false, correct later if needed
 
-            // for loop checking if it matches any flags for true
-            for (int i = 0; i < GU.ArgumentTrueFlags.length; i++) {
-                if (event.strings[0].toString().equalsIgnoreCase(GU.ArgumentTrueFlags[i])) { // if strings[0] matches current argument flag
-                    DoPrefixTrue = true; // override to true
-                    break;
-                }
-            }
+            DoPrefixTrue = GU.StringContainsTrue(event.strings[0].toString());
 
             if (GU.DoSecurityPrefix( event.commandSender) && !DoPrefixTrue) { // if Player has un-needed flag && shouldn't have it
                 GU.SetDoSecurityPrefix(( event.commandSender), false); // set false / remove flag

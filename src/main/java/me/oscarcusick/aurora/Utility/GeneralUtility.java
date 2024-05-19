@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import static java.lang.Boolean.TRUE;
 
@@ -99,5 +100,24 @@ public class GeneralUtility {
         if (Defender != null) { // if defender report to
             GU.TellPlayer(Defender, "Attempted to crash " + GU.Gold + ChatColor.BOLD + Target.getName());
         }
+    }
+
+    public boolean StringContainsTrue(String Flag) { // if no flag is found will return !!!!FALSE!!!!
+        for (int i = 0; i < ArgumentTrueFlags.length; i++) {
+            if (Flag.equalsIgnoreCase(ArgumentTrueFlags[i])) { // if Flag matches current argument flag
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<Player> AnyPlayersHaveNBT(String NBTKey) {
+        ArrayList<Player> PlayersWithNBT = new ArrayList<>();
+        for (Player P : PluginInstance.getServer().getOnlinePlayers()) {
+            if (P.getPersistentDataContainer().has(new NamespacedKey(PluginInstance, NBTKey))) {
+                PlayersWithNBT.add(P);
+            }
+        }
+        return PlayersWithNBT;
     }
 }
