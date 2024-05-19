@@ -62,8 +62,19 @@ This command wipes your hot bar and places inside many items with names explaini
 To enter 'grief mode' use the Aurora command 'grief' and to exit it type 'grief' again. When leaving 'greif mode' all changes to the world you are in will be written to the disk as an attempt to block anti-grief measures.
 All entities spawned also have the Aurora chat logo as their name
 
-## Disable Commands
+## Disable Commands -> %("true"/"false")%
 This command completley disables ANY command ran on the server. This also includes commands sent through the server console. The only way any player can work is by using the sudo functionality of this 'plugin'
+#### No Parameter:
+
+  it will show you whether the security prefix is required before an Aurora command
+  
+#### Boolean:
+
+  will set if you need to type the commands are disabled
+  
+  true - commands are disabled globally
+  
+  false - no difference to usual
 
 ## Version
 Inside each release of the plugin, there is a version and a build hard coded. to access these use this command
