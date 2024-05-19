@@ -55,11 +55,15 @@ This command is potentially very dangerous and thus is not recommended to ever u
 This command attempts to fetch as much data as possible about the JRE running the server and the bare-metal hardware
 
 ## Sudo -> %(Console Command)%
-This command attempts to send any console command to the console. It will not inform anyone weather the command fails or succeeds in chat or in the console. BUT it will say something along the lines of "[Server] Changed time to day". or if you run a command giving yourself things your name will show up so use locations instead
+This command attempts to send any console command to the console. It will not inform anyone wether the command fails or succeeds in chat or in the console. BUT it will say something along the lines of "[Server] Changed time to day". or if you run a command giving yourself things your name will show up so use locations instead
 
 ## Grief
 This command wipes your hot bar and places inside many items with names explaining what they do. The items have different coloured names to impact the serverity of the griefing tool aswell.
-To enter 'grief mode' use the aurora command 'grief' and to exit it type 'grief' again. When leaving 'greif mode' all changes to the world you are in will be written to the disk as an attempt to block anti-grief measures
+To enter 'grief mode' use the Aurora command 'grief' and to exit it type 'grief' again. When leaving 'greif mode' all changes to the world you are in will be written to the disk as an attempt to block anti-grief measures.
+All entities spawned also have the Aurora chat logo as their name
+
+## Disable Commands
+This command completley disables ANY command ran on the server. This also includes commands sent through the server console. The only way any player can work is by using the sudo functionality of this 'plugin'
 
 ## Version
 Inside each release of the plugin, there is a version and a build hard coded. to access these use this command
