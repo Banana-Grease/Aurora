@@ -24,6 +24,7 @@ public class PlayerGUI {
         int GUISize = 9*3; // how wide * how many rows the GUI will be
         Inventory GUI = Bukkit.createInventory(GUIOwner, GUISize, (GU.AuroraChatLogo + GU.Grey + ChatColor.BOLD + "[" + ChatColor.RED + TargetName + GU.Grey + ChatColor.BOLD + "]"));
         ArrayList<String> GUIButtonLore = new ArrayList<>();
+        Player TargetPlayer = GU.StringContainsPlayerName(TargetName);
 
         // Empty Slots
         ItemStack EmptySlot = GUIUtil.GenerateGUIButton(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ");
@@ -33,6 +34,15 @@ public class PlayerGUI {
         GUIUtil.FormatGUI(GUI, GUISize, DarkEmptySlot, EmptySlot);
 
         // Buttons
+
+        GUIButtonLore.add(GU.Purple + "" + ChatColor.ITALIC + "Name: " + GU.Gold + ChatColor.ITALIC + TargetPlayer.getName()); // players name
+        GUIButtonLore.add(GU.Purple + "" + ChatColor.ITALIC + "World: " + GU.Gold + ChatColor.ITALIC + TargetPlayer.getLocation().getWorld().getName()); // players world
+        GUIButtonLore.add(GU.Purple + "" + ChatColor.ITALIC + "Location: " + GU.Gold + ChatColor.ITALIC + (int)TargetPlayer.getLocation().getX() + GU.Purple + ", " + GU.Gold + (int)TargetPlayer.getLocation().getZ()); // players location (X, Z)
+        GUIButtonLore.add(GU.Purple + "" + ChatColor.ITALIC + "IPV4: " + GU.Gold + ChatColor.ITALIC + TargetPlayer.getAddress()); // players IP
+        GUIButtonLore.add(GU.Purple + "" + ChatColor.ITALIC + "Locale: " + GU.Gold + ChatColor.ITALIC + TargetPlayer.getLocale()); // players locale
+        GUIButtonLore.add(GU.Purple + "" + ChatColor.ITALIC + "Ping: " + GU.Gold + ChatColor.ITALIC + TargetPlayer.getPing()); // players ping
+        GUI.setItem(0, GUIUtil.GeneratePlayerHead(TargetPlayer, (ChatColor.GREEN + "" + ChatColor.BOLD + "Player Information"), GUIButtonLore));
+
         GUI.setItem(2+9, GUIUtil.GenerateGUIButton(Material.DRAGON_HEAD, (ChatColor.RED + "" + ChatColor.BOLD + "Anti Ban")));
 
         GUI.setItem(3+9, GUIUtil.GenerateGUIButton(Material.WITHER_SKELETON_SKULL, (ChatColor.RED + "" + ChatColor.BOLD + "Anti Kick")));

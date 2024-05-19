@@ -37,8 +37,8 @@ public class GeneralUtility {
 
 
     // argument flag signatures
-    public String[] ArgumentTrueFlags = {"true", "t", "yes", "y", "positive", "p"};
-    public String[] ArgumentFalseFlags = {"false", "f", "no", "n", "negative", "n"};
+    public String[] ArgumentTrueFlags = {"true", "t", "yes", "y", "positive", "p"}; // any of these indicates true
+    public String[] ArgumentFalseFlags = {"false", "f", "no", "n", "negative", "n"}; // any of these indicates false
 
     // SHA-256 Hash any string
     public String Hash256(String Plaintext) throws NoSuchAlgorithmException {
@@ -71,7 +71,11 @@ public class GeneralUtility {
 
     // sends a message to a specific player in the Aurora format
     public void TellPlayer(Player TargetPlayer, String Content, String AdditionalModule) {
-        TargetPlayer.sendMessage(AuroraChatLogo + AdditionalModule + ChatColor.of(new Color(229, 13, 145)) + " - " + ChatColor.DARK_GRAY + Content);
+        if (AdditionalModule == "") {
+            TargetPlayer.sendMessage(AuroraChatLogo + ChatColor.of(new Color(229, 13, 145)) + " - " + ChatColor.DARK_GRAY + Content);
+        } else {
+            TargetPlayer.sendMessage(AuroraChatLogo + Grey + ChatColor.BOLD + "[" + AdditionalModule + Grey + ChatColor.BOLD + "]" + ChatColor.of(new Color(229, 13, 145)) + " - " + ChatColor.DARK_GRAY + Content);
+        }
     }
     public void TellPlayer(Player TargetPlayer, String Content) { // overload to provide AdditionalModule as an optional parameter
         TellPlayer(TargetPlayer, Content, "");

@@ -1,10 +1,12 @@
 package me.oscarcusick.aurora.Utility;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,14 @@ public class GUIUtility {
     // Generates a GUI Button with no lore
     public ItemStack GenerateGUIButton(Material ItemType, String Name) {
         return GenerateGUIButton(ItemType, Name, new ArrayList<>());
+    }
+
+    public ItemStack GeneratePlayerHead(Player Player, String ItemName, ArrayList<String> Lore) {
+        ItemStack PlayerHead = GenerateGUIButton(Material.PLAYER_HEAD, ItemName, Lore);
+        SkullMeta HeadMeta = (SkullMeta) PlayerHead.getItemMeta();
+        HeadMeta.setOwningPlayer(Player);
+        PlayerHead.setItemMeta(HeadMeta);
+        return PlayerHead;
     }
 
     // returns a nicely formatted gui with empty slots and a border

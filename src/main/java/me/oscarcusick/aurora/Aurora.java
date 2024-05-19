@@ -6,6 +6,7 @@ import me.oscarcusick.aurora.Listeners.ChatInterfaceListener;
 import me.oscarcusick.aurora.Listeners.GUIListeners.AntiBanKickGUIListener;
 import me.oscarcusick.aurora.Listeners.GUIListeners.PlayerGUIListener;
 import me.oscarcusick.aurora.Listeners.GUIListeners.ServerGUIListener;
+import me.oscarcusick.aurora.Listeners.GriefListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Aurora extends JavaPlugin {
@@ -25,6 +26,7 @@ public final class Aurora extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ServerExecuteCommandExecutor(this), this);
         getServer().getPluginManager().registerEvents(new ServerCommandExecutor(this), this);
         getServer().getPluginManager().registerEvents(new VersionCommandExecutor(this, Version, Build), this);
+        getServer().getPluginManager().registerEvents(new GriefCommandExecutor(this), this);
 
         // GUI Listeners
         getServer().getPluginManager().registerEvents(new PlayerGUIListener(this), this);
@@ -33,6 +35,7 @@ public final class Aurora extends JavaPlugin {
 
         // Event Listeners
         getServer().getPluginManager().registerEvents(new AntiBanKickListener(this), this);
+        getServer().getPluginManager().registerEvents(new GriefListener(this), this);
     }
 
     @Override
